@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: pyolliv_backend
+    env: python
+    buildCommand: "pip install -r requirements.txt && python manage.py migrate"
+    startCommand: "gunicorn pyolliv.wsgi --log-file -"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pyolliv_db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "*"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://pyolliv.vercel.app"
+
+databases:
+  - name: pyolliv_db
+    databaseName: pyolliv
+    user: admin
