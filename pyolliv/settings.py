@@ -4,7 +4,9 @@ Django settings for Pyolliv Fleet Management System
 import os
 from pathlib import Path
 from datetime import timedelta
-from decouple import config
+from decouple import RepositoryEnv,Config
+
+config = Config(RepositoryEnv('/etc/secrets/.env'))
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
